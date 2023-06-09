@@ -2,14 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const playwright_1 = require("playwright");
 const launchOptions = {
-    headless: false,
-    args: ["--start-maximized", "--disable-dev-shm-usage", "--no-sandbox", "--no-zygote", "--disable-setuid-sandbox"],
+    slowMo: 0,
+    args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream', '--deny-permission-prompts'],
+    firefoxUserPrefs: {
+        'media.navigator.streams.fake': true,
+        'media.navigator.permission.disabled': true
+    }
 };
 async function getManifestURL(url) {
-    const browser = await playwright_1.chromium.launch(launchOptions);
-    const context = await browser.newContext();
+    const browser = await playwright_1.chromium.launch({ ...launchOptions, channel: 'chrome' });
+    const context = await browser.newContext({
+        viewport: { width: 1200, height: 800 },
+        ignoreHTTPSErrors: true
+    });
     const page = await context.newPage();
-    await page.setViewportSize({ width: 1200, height: 800 });
     try {
         page.on('request', request => console.log('>>', request.method(), request.url()));
         page.on('response', response => console.log('<<', response.status(), response.url()));
