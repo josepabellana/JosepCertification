@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/josepabellana/JosepCertification#readme",
   "dependencies": {
+    "playwright": "^1.35.0",
     "puppeteer": "^20.5.0"
   },
   "devDependencies": {
