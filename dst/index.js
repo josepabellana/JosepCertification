@@ -18,6 +18,7 @@ async function getManifestURL(url) {
             ignoreHTTPSErrors: true
         });
         const page = await context.newPage();
+        let manifestContent = null;
         try {
             page.on('request', request => {
                 if (request.resourceType() === 'xhr' && /manifest.m3u8$/i.test(request.url())) {
@@ -26,7 +27,17 @@ async function getManifestURL(url) {
                     console.log(`Manifest URL: ${manifestURL}`);
                     request.response().then((res) => {
                         res.text().then((text) => {
-                            resolve(text);
+                            manifestContent = text;
+                        });
+                    });
+                }
+                if (request.resourceType() === 'xhr' && /playlist.m3u8$/i.test(request.url())) {
+                    console.log('>>', request.resourceType(), request.url());
+                    const playlistURK = request.url();
+                    console.log(`Playlist URL: ${playlistURK}`);
+                    request.response().then((res) => {
+                        res.text().then((text) => {
+                            resolve({ manifestContent, playlistContent: text });
                             // Close the browser
                             browser.close();
                         });
@@ -48,7 +59,7 @@ async function getManifestURL(url) {
 // Llamar a la función y proporcionar la URL de la página web
 const url = 'https://hivejsartifacts.blob.core.windows.net/artifacts/plugins/102147/html5/dist/reference/html5/9.2.0/hivejs/silent-videojs.test.html?manifest=https://streaming-simulator-prod.hivestreaming.com/generic/live/beta-big-bunny-multi/manifest.m3u8?callback=https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj';
 getManifestURL(url)
-    .then((manifestContent) => {
+    .then(({ manifestContent, playlistContent }) => {
     // console.log(manifestContent);
     if (manifestContent) {
         let manifestBitrates = (0, utils_1.extractResolutionsFromManifest)(manifestContent);
@@ -56,6 +67,13 @@ getManifestURL(url)
             console.log('This manifest has:', manifestBitrates.length);
             console.log('The highest Bitrate is:', manifestBitrates[0]);
         }
+    }
+    if (playlistContent) {
+        let { targetDuration, fragmentCount } = (0, utils_1.parsePlaylistContent)(playlistContent);
+        if (targetDuration)
+            console.log('The playlist have the following fragment duration:', targetDuration);
+        if (fragmentCount)
+            console.log('The amount of fragments are: ', fragmentCount);
     }
 })
     .catch((error) => {
