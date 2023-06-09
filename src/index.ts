@@ -1,5 +1,4 @@
 
-import * as puppeteer from 'puppeteer';
 import { chromium } from 'playwright';
 
 const launchOptions = {
