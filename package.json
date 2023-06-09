@@ -1,0 +1,23 @@
+{
+  "name": "certification",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "commit": "git add . && git commit -m 'x' && git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josepabellana/JosepCertification.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josepabellana/JosepCertification/issues"
+  },
+  "homepage": "https://github.com/josepabellana/JosepCertification#readme",
+  "dependencies": {
+    "puppeteer": "^20.5.0",
+    "typescript": "^5.1.3"
+  }
+}
