@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "commit": "git add . && git commit -m 'x' && git push",
-    "build": "tsc automation.ts",
+    "build": "tsc ",
     "start": "tsc && (node ./dst/index.js)"
   },
   "repository": {
