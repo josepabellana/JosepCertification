@@ -4,3 +4,6 @@ dst
 dst-*
 build
 package
+/test-results/
+/playwright-report/
+/playwright/.cache/

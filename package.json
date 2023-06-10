@@ -2,11 +2,13 @@
   "name": "certification",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js", 
+  "main": "index.js",
   "scripts": {
     "commit": "git add . && git commit -m 'x' && git push",
     "build": "tsc ",
-    "start": "tsc && (node ./dst/index.js)"
+    "start": "tsc && (node ./dst/index.js)",
+    "test": "npx playwright test",
+    "webTests": "npx playwright show-report"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
     "puppeteer": "^20.5.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.35.0",
     "@types/puppeteer": "^7.0.4"
   }
 }
