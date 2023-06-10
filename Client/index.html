@@ -1,39 +1,49 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Manifest Analyzer</title>
+    <title>Checklist Analyzer</title>
     <link href="./styles.css" rel="stylesheet"> </link>
   </head>
   <body>
     <div class="container">
-      <h1>Manifest Analyzer</h1>
+      <h1>URL Checklist Analyzer</h1>
       <div class="form-group">
         <label for="inputLink" class="form-label">Manifest Link:</label>
-        <input type="text" id="inputLink" class="form-input" placeholder="Enter the manifest link" />
+        <input type="text" id="inputLink" class="form-input" placeholder="Enter the manifest link" value="https://hivejsartifacts.blob.core.windows.net/artifacts/plugins/102147/html5/dist/reference/html5/9.2.0/hivejs/silent-videojs.test.html?manifest=https://streaming-simulator-prod.hivestreaming.com/generic/live/beta-big-bunny-multi/manifest.m3u8?callback=https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj" />
       </div>
       <button onclick="analyzeManifest()" class="form-button">Analyze</button>
       <table id="resultsTable" class="results-table">
         <tr>
-          <th>Target Duration</th>
+          <th>Recommended number of bitrates</th>
           <td></td>
         </tr>
         <tr>
-          <th>Fragment Count</th>
+          <th>Maximum Bitrate</th>
           <td></td>
         </tr>
+        <tr>
+            <th>Total fragment duration</th>
+            <td></td>
+          </tr>
       </table>
     </div>
     
     <script>
         function analyzeManifest() {
           const inputLink = document.getElementById('inputLink');
-          const link = inputLink.value.trim();
+          const inputLinkTrimmed = inputLink.value.trim();
   
           // Perform the logic to analyze the manifest
-          const url = 'https://hivejsartifacts.blob.core.windows.net/artifacts/plugins/102147/html5/dist/reference/html5/9.2.0/hivejs/silent-videojs.test.html?manifest=https://streaming-simulator-prod.hivestreaming.com/generic/live/beta-big-bunny-multi/manifest.m3u8?callback=https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj';
+        //   const streamURL = 'https://hivejsartifacts.blob.core.windows.net/artifacts/plugins/102147/html5/dist/reference/html5/9.2.0/hivejs/silent-videojs.test.html?manifest=https://streaming-simulator-prod.hivestreaming.com/generic/live/beta-big-bunny-multi/manifest.m3u8?callback=https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj';
+          sendData(inputLinkTrimmed);
+
           function sendData(link) {
+            console.log('Sending url link to Backend... ', link);
             //We send the objects to our server and reinitialize the objects to get new statistics for the next period
             // console.log(streamInformation,bufferingEvents)
+            const streamInformation = {
+                url: link
+            }
             fetch("/", {
                 method: "POST",
                 headers: {
@@ -41,28 +51,37 @@
                 "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    link,
+                    streamInformation,
                 }),
             }).
-            then(resp=>{})
+            then(resp=>resp.json()).then(data=>buildTable(data))
             .catch(err=>console.warn('Error during fetch of results', err));
           }
-          // Example logic with mock results
-          const targetDuration = 2;
-          const fragmentCount = 15;
-  
-          // Display the results in the table
-          const table = document.getElementById('resultsTable');
-          table.innerHTML = `
-            <tr>
-              <th>Target Duration</th>
-              <td>${targetDuration}</td>
-            </tr>
-            <tr>
-              <th>Fragment Count</th>
-              <td>${fragmentCount}</td>
-            </tr>
-          `;
+
+
+          function buildTable({data}){
+            console.log('Processing data received from the Backend... ',data);
+            // Example logic with mock results
+            const targetDuration = 2;
+            const fragmentCount = 15;
+    
+            // Display the results in the table
+            const table = document.getElementById('resultsTable');
+            table.innerHTML = `
+                <tr>
+                <th class="${data['numberBitrates'][0]}">Recommended number of bitrates</th>
+                <td>${data['numberBitrates'][1]} bitrates</td>
+                </tr>
+                <tr>
+                <th class="${data['totalBitrate'][0]}">Maximum Bitrate</th>
+                <td>${data['totalBitrate'][1]}Mbps</td>
+                </tr>
+                <tr>
+                <th class="${data['fragmentsInfo'][0]}">Total fragment duration</th>
+                <td>${data['fragmentsInfo'][1]} fragments, ${data['fragmentsInfo'][2]}s duration</td>
+                </tr>
+            `;
+            }
         }
       </script>
        

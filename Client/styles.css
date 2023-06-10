@@ -64,3 +64,16 @@ body {
     font-weight: bold;
     text-align: left;
   }
+
+
+  .green {
+    background-color: #9cc39a !important;
+  }
+
+  .yellow {
+    background-color: #e8d17b !important;
+  }
+
+  .red {
+    background-color: #dc8477 !important;
+  }

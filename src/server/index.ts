@@ -4,21 +4,26 @@ import fs = require('fs');
 import bodyParser = require('body-parser');
 import path from 'path';
 
+import {testLogic} from './support/index';
+
 app.use(express.static('Client'));
 app.use(bodyParser.json());
 
 
-app.post('/', (req,res)=>{
-    let {url}  = req.body;
-
+app.post('/', async (req,res)=>{
+    let { url }  = req.body.streamInformation;
+    console.log('Received request to analize with url: ', url);
     try{
         if(url){
-
+            let data = await testLogic(url);
+            res.send({data});
         }else{
             new Error('Theres not a valid url');
+            res.send({});
         }
     }catch (err){
         console.warn('Error analizing url', err);
+        res.send({});
     }
 });
 

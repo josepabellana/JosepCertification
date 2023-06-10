@@ -26,9 +26,9 @@ async function getManifestURL(url: string): Promise<any> {
       page.on('request', request => {
         
         if (request.resourceType() === 'xhr' && /manifest.m3u8$/i.test(request.url())) {
-          console.log('>>', request.resourceType(), request.url());
+          // console.log('>>', request.resourceType(), request.url());
           const manifestURL = request.url();
-          console.log(`Manifest URL: ${manifestURL}`);
+          // console.log(`Manifest URL: ${manifestURL}`);
 
           request.response().then((res:any) => {
             res.text().then((text:any) => {
@@ -38,9 +38,9 @@ async function getManifestURL(url: string): Promise<any> {
         }
 
         if (request.resourceType() === 'xhr' && /playlist.m3u8$/i.test(request.url())) {
-          console.log('>>', request.resourceType(), request.url());
+          // console.log('>>', request.resourceType(), request.url());
           const playlistURK = request.url();
-          console.log(`Playlist URL: ${playlistURK}`);
+          // console.log(`Playlist URL: ${playlistURK}`);
 
           request.response().then((res:any) => {
             res.text().then((text:any) => {
@@ -68,30 +68,59 @@ async function getManifestURL(url: string): Promise<any> {
   }
   
   // Llamar a la función y proporcionar la URL de la página web
- export function testLogic(url:string){
-    getManifestURL(url)
-      .then(({manifestContent, playlistContent}) => {
-        // console.log(manifestContent);
-        
-        if (manifestContent) {
-        let manifestBitrates = extractResolutionsFromManifest(manifestContent);
+ export async function testLogic(url:string){
+  return new Promise((res,rej)=>{
+  console.log('Starting to process data...');
+      getManifestURL(url)
+        .then(({manifestContent, playlistContent}) => {
+          // console.log(manifestContent);
+          let obj:any = {
+            'numberBitrates': [],
+            'totalBitrate': [],
+            'fragmentsInfo': [],
+          };
 
-        if(manifestBitrates && manifestBitrates.length > 0){
-            console.log(`This manifest has ${manifestBitrates.length} bitrates`);
-            console.log('The highest Bitrate is:', manifestBitrates[0]);
-        }
-        }
+          if (manifestContent) {
+            let {manBitrates, manBandwidth} = extractResolutionsFromManifest(manifestContent);
+            if(manBitrates && manBitrates.length > 0){
 
-        if(playlistContent){
-          let {targetDuration, fragmentCount} = parsePlaylistContent(playlistContent);
+                console.log(`This manifest has ${manBitrates.length} bitrates`);
+                if(manBitrates.length == 2 || manBitrates.length == 3) obj['numberBitrates'].push('green');
+                else if(manBitrates.length == 1 || manBitrates.length > 3 && manBitrates.length < 6) obj['numberBitrates'].push('yellow');
+                else obj['numberBitrates'].push('red');
+                obj['numberBitrates'].push(manBitrates.length);
+                console.log('The highest Bitrate is:', manBitrates[0]);
+                obj['numberBitrates'].push(manBitrates[0]);
+            }
+            if(manBandwidth && manBandwidth.length > 0){
+              console.log(`Maximum bandwidth for this manifest is ${manBandwidth[0]}, this is equal to ${Number(manBandwidth[0])/1000000}Mbps`);
+              if(Number(manBandwidth[0])/1000000 < 3.5) obj['totalBitrate'].push('green');
+              else obj['totalBitrate'].push('red');
+              obj['totalBitrate'].push(Number(manBandwidth[0])/1000000);
+            }
+          }
 
-          if(targetDuration) console.log('The playlist have the following fragment duration:', targetDuration);
-          if(fragmentCount) console.log('The amount of fragments are: ', fragmentCount);
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+          if(playlistContent){
+            let {targetDuration, fragmentCount} = parsePlaylistContent(playlistContent);
+
+            if(targetDuration) console.log('The playlist have the following fragment duration:', targetDuration);
+            if(fragmentCount) console.log('The amount of fragments are: ', fragmentCount);
+            if(fragmentCount * targetDuration > 20 && targetDuration >= 2 && targetDuration <= 4) obj['fragmentsInfo'].push('green');
+            else obj['fragmentsInfo'].push('yellow');
+            obj['fragmentsInfo'].push(fragmentCount);
+            obj['fragmentsInfo'].push(targetDuration);
+
+          }
+          console.log('Stopped processing data');
+          res(obj);
+        })
+        .catch((error) => {
+          rej({});
+          console.error('Error:', error);
+        });
+
+      
+    });
   }
 
 // const url = 'https://hivejsartifacts.blob.core.windows.net/artifacts/plugins/102147/html5/dist/reference/html5/9.2.0/hivejs/silent-videojs.test.html?manifest=https://streaming-simulator-prod.hivestreaming.com/generic/live/beta-big-bunny-multi/manifest.m3u8?callback=https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj';
