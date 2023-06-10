@@ -2,7 +2,7 @@
 
 
 
-function extractResolutionsFromManifest(manifestContent: string): string[] {
+export function extractResolutionsFromManifest(manifestContent: string): string[] {
   const regex = /RESOLUTION=(\d+x\d+)/g;
   const matches = manifestContent.match(regex);
   if (matches) {
@@ -12,7 +12,7 @@ function extractResolutionsFromManifest(manifestContent: string): string[] {
 }
 
 
-function parsePlaylistContent(playlistContent: string): { targetDuration: number; fragmentCount: number } {
+export function parsePlaylistContent(playlistContent: string): { targetDuration: number; fragmentCount: number } {
     const lines = playlistContent.split('\n');
     let targetDuration = 0;
     let fragmentCount = 0;
