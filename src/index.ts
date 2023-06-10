@@ -23,7 +23,7 @@ async function getManifestURL(url: string): Promise<any> {
     let manifestContent:any = null;
     try {
 
-      page.on('request', (request:any) => {
+      page.on('request', request => {
         
         if (request.resourceType() === 'xhr' && /manifest.m3u8$/i.test(request.url())) {
           console.log('>>', request.resourceType(), request.url());
@@ -65,4 +65,32 @@ async function getManifestURL(url: string): Promise<any> {
     
     
     })
+  }
+  
+  // Llamar a la función y proporcionar la URL de la página web
+  // const url = 'https://hivejsartifacts.blob.core.windows.net/artifacts/plugins/102147/html5/dist/reference/html5/9.2.0/hivejs/silent-videojs.test.html?manifest=https://streaming-simulator-prod.hivestreaming.com/generic/live/beta-big-bunny-multi/manifest.m3u8?callback=https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj';
+  function testLogic(url:string){
+    getManifestURL(url)
+      .then(({manifestContent, playlistContent}) => {
+        // console.log(manifestContent);
+        
+        if (manifestContent) {
+        let manifestBitrates = extractResolutionsFromManifest(manifestContent);
+
+        if(manifestBitrates && manifestBitrates.length > 0){
+            console.log(`This manifest has ${manifestBitrates.length} bitrates`);
+            console.log('The highest Bitrate is:', manifestBitrates[0]);
+        }
+        }
+
+        if(playlistContent){
+          let {targetDuration, fragmentCount} = parsePlaylistContent(playlistContent);
+
+          if(targetDuration) console.log('The playlist have the following fragment duration:', targetDuration);
+          if(fragmentCount) console.log('The amount of fragments are: ', fragmentCount);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
