@@ -6,9 +6,6 @@
   "scripts": {
     "commit": "git add . && git commit -m 'x' && git push",
     "build": "tsc ",
-    "start": "tsc && (node ./dst/index.js)",
-    "test": "npx playwright test",
-    "webTests": "npx playwright show-report",
     "server": "tsc && nodemon ./dst/server/index"
   },
   "repository": {
