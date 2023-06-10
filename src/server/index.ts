@@ -2,19 +2,32 @@ import express = require('express');
 const app = express();
 import fs = require('fs');
 import bodyParser = require('body-parser');
+import path from 'path';
 
-app.use(express.static(__dirname));
+app.use(express.static('Client'));
 app.use(bodyParser.json());
 
 
+app.post('/', (req,res)=>{
+    let {url}  = req.body;
 
+    try{
+        if(url){
 
-
-
-
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+        }else{
+            new Error('Theres not a valid url');
+        }
+    }catch (err){
+        console.warn('Error analizing url', err);
+    }
 });
+
+
+
+
+// app.get('/', function (req, res) {
+//     res.sendFile(path.resolve('Client/index.html'));
+// });
 
 
 
