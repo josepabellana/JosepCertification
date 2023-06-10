@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const playwright_1 = require("playwright");
-const utils_1 = require("./utils");
 const launchOptions = {
     slowMo: 0,
     args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream', '--deny-permission-prompts'],
@@ -62,14 +61,14 @@ getManifestURL(url)
     .then(({ manifestContent, playlistContent }) => {
     // console.log(manifestContent);
     if (manifestContent) {
-        let manifestBitrates = (0, utils_1.extractResolutionsFromManifest)(manifestContent);
+        let manifestBitrates = extractResolutionsFromManifest(manifestContent);
         if (manifestBitrates && manifestBitrates.length > 0) {
-            console.log('This manifest has:', manifestBitrates.length);
+            console.log(`This manifest has ${manifestBitrates.length} bitrates`);
             console.log('The highest Bitrate is:', manifestBitrates[0]);
         }
     }
     if (playlistContent) {
-        let { targetDuration, fragmentCount } = (0, utils_1.parsePlaylistContent)(playlistContent);
+        let { targetDuration, fragmentCount } = parsePlaylistContent(playlistContent);
         if (targetDuration)
             console.log('The playlist have the following fragment duration:', targetDuration);
         if (fragmentCount)

@@ -1,6 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.parsePlaylistContent = exports.extractResolutionsFromManifest = void 0;
 function extractResolutionsFromManifest(manifestContent) {
     const regex = /RESOLUTION=(\d+x\d+)/g;
     const matches = manifestContent.match(regex);
@@ -9,7 +7,6 @@ function extractResolutionsFromManifest(manifestContent) {
     }
     return [];
 }
-exports.extractResolutionsFromManifest = extractResolutionsFromManifest;
 function parsePlaylistContent(playlistContent) {
     const lines = playlistContent.split('\n');
     let targetDuration = 0;
@@ -25,4 +22,3 @@ function parsePlaylistContent(playlistContent) {
     }
     return { targetDuration, fragmentCount };
 }
-exports.parsePlaylistContent = parsePlaylistContent;
