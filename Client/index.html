@@ -8,8 +8,12 @@
     <div class="container">
       <h1>URL Checklist Analyzer</h1>
       <div class="form-group">
-        <label for="inputLink" class="form-label">Manifest Link:</label>
-        <input type="text" id="inputLink" class="form-input" placeholder="Enter the manifest link" value="https://hivejsartifacts.blob.core.windows.net/artifacts/plugins/102147/html5/dist/reference/html5/9.2.0/hivejs/silent-videojs.test.html?manifest=https://streaming-simulator-prod.hivestreaming.com/generic/live/beta-big-bunny-multi/manifest.m3u8?callback=https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj" />
+        <label for="streamLink" class="form-label">Stream Link:</label>
+        <input type="text" id="streamLink" class="form-input" placeholder="Enter the strea link" value="https://hivejsartifacts.blob.core.windows.net/artifacts/plugins/102147/html5/dist/reference/html5/9.2.0/hivejs/silent-videojs.test.html" />
+        <label for="manifestLink" class="form-label">Manifest Link:</label>
+        <input type="text" id="manifestLink" class="form-input" placeholder="Enter the manifest link" value="https://streaming-simulator-prod.hivestreaming.com/generic/live/beta-big-bunny-multi/manifest.m3u8" />
+        <label for="ticketLink" class="form-label">Callback(Ticket):</label>
+        <input type="text" id="ticketLink" class="form-input" placeholder="Enter the callback link" value="https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj" />
       </div>
       <button onclick="analyzeManifest()" class="form-button">Analyze</button>
       <table id="resultsTable" class="results-table">
@@ -30,12 +34,19 @@
     
     <script>
         function analyzeManifest() {
-          const inputLink = document.getElementById('inputLink');
-          const inputLinkTrimmed = inputLink.value.trim();
-  
+          const streamLink = document.getElementById('streamLink');
+          const streamLinkTrimmed = streamLink.value.trim();
+
+          const manifestLink = document.getElementById('manifestLink');
+          const manifestLinkTrimmed = manifestLink.value.trim();
+
+          const ticketLink = document.getElementById('ticketLink');
+          const ticketLinkTrimmed = ticketLink.value.trim();
+
+          const joinURL = streamLinkTrimmed + '?manifest=' +manifestLinkTrimmed + '?callback=' + ticketLinkTrimmed;
           // Perform the logic to analyze the manifest
         //   const streamURL = 'https://hivejsartifacts.blob.core.windows.net/artifacts/plugins/102147/html5/dist/reference/html5/9.2.0/hivejs/silent-videojs.test.html?manifest=https://streaming-simulator-prod.hivestreaming.com/generic/live/beta-big-bunny-multi/manifest.m3u8?callback=https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj';
-          sendData(inputLinkTrimmed);
+          sendData(joinURL);
 
           function sendData(link) {
             console.log('Sending url link to Backend... ', link);
