@@ -1,0 +1,46 @@
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    profiles="urn:mpeg:dash:profile:isoff-live:2011" type="dynamic" minBufferTime="PT3S"
+    publishTime="2018-06-29T08:16:34Z" minimumUpdatePeriod="PT0S" availabilityStartTime="2017-05-19T20:02:04Z">
+    <Period>
+        <AdaptationSet id="1" group="1" profiles="ccff" bitstreamSwitching="false" segmentAlignment="true"
+            contentType="video" mimeType="video/mp4" codecs="avc1.640033" maxWidth="4096" maxHeight="2304"
+            startWithSAP="1">
+            <SegmentTemplate timescale="10000000"
+                media="QualityLevels($Bandwidth$)/Fragments(video=$Time$,format=mpd-time-csf)"
+                initialization="QualityLevels($Bandwidth$)/Fragments(video=i,format=mpd-time-csf)">
+                <SegmentTimeline><S t="502620000000" d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S
+                        d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S
+                        d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S
+                        d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S
+                        d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S
+                        d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S
+                        d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S d="20000000"></S><S
+                        d="20000000"></S><S d="20000000"></S><S d="20000000"></S></SegmentTimeline>
+            </SegmentTemplate>
+            <Representation id="1_V_video_9" bandwidth="4339679" codecs="avc1.640028" width="1920" height="1080">
+            </Representation>
+            <Representation id="1_V_video_10" bandwidth="3139175" codecs="avc1.64001F" width="1280" height="720">
+            </Representation>
+            <Representation id="1_V_video_11" bandwidth="2078252" codecs="avc1.64001F" width="960" height="540">
+            </Representation>
+            <Representation id="1_V_video_12" bandwidth="926058" codecs="avc1.64001E" width="640" height="360">
+            </Representation>
+        </AdaptationSet>
+        <AdaptationSet id="2" group="5" profiles="ccff" bitstreamSwitching="false" segmentAlignment="true"
+            contentType="audio" mimeType="audio/mp4" codecs="mp4a.40.2">
+            <SegmentTemplate timescale="10000000"
+                media="QualityLevels($Bandwidth$)/Fragments(aac_UND_6_384=$Time$,format=mpd-time-csf)"
+                initialization="QualityLevels($Bandwidth$)/Fragments(aac_UND_6_384=i,format=mpd-time-csf)">
+                <SegmentTimeline><S t="502601066666" d="20053334"></S><S d="20053333"></S><S d="20053333"></S><S
+                        d="20053334"></S><S d="20053333"></S><S d="20053333"></S><S d="20053334"></S><S
+                        d="20053333"></S><S d="20053333"></S><S d="20053334"></S><S d="20053333"></S><S
+                        d="20053333"></S><S d="20053334"></S><S d="20053333"></S><S d="20053333"></S><S
+                        d="20053334"></S><S d="20053333"></S><S d="20053333"></S><S d="20053334"></S><S
+                        d="20053333"></S><S d="20053333"></S><S d="20053334"></S><S d="20053333"></S><S
+                        d="20053333"></S><S d="17653334"></S><S d="20053333"></S><S d="20053333"></S><S
+                        d="20053334"></S><S d="20053333"></S><S d="20053333"></S><S d="20053334"></S></SegmentTimeline>
+            </SegmentTemplate>
+            <Representation id="5_A_aac_UND_6_384_1" bandwidth="384000" audioSamplingRate="48000"></Representation>
+        </AdaptationSet>
+    </Period>
+</MPD>
