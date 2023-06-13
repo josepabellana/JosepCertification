@@ -22,4 +22,5 @@ To make it work:
 - Checks if supports multiple viewers
 - Checks if allow query parameters
 - Checks if enables full hive tech
+
 By Josep abellana Puyol 
