@@ -66,8 +66,7 @@ async function getManifestURL(url: string): Promise<any> {
     
     })
   }
-  
-  // Llamar a la función y proporcionar la URL de la página web
+
  export async function testLogic(url:string){
   return new Promise((res,rej)=>{
   console.log('Starting to process data...');
