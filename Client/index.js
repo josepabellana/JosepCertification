@@ -13,9 +13,12 @@ function checkManifestType(link){
       } else {
         console.log("Unknown manifest type.");
       }
-      const manifestDiv = document.createElement("div");
-      manifestDiv.textContent = `Manifest Type: ${manifestType}`;
-      document.getElementsByClassName('button_info_container').appendChild(manifestDiv);
+      if(manifestType) {
+          const manifestDiv = document.createElement("div");
+          manifestDiv.textContent = `Manifest Type: ${manifestType}`;
+          console.log(document.getElementsByTagName('button_info_container'))
+          document.getElementById('info_container').appendChild(manifestDiv);
+      }
     })
     .catch(error => {
       console.error("Error fetching manifest:", error);

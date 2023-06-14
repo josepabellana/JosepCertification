@@ -16,11 +16,8 @@
         <label for="ticketLink" class="form-label">Callback(Ticket):</label>
         <input type="text" id="ticketLink" class="form-input" placeholder="Enter the callback link" value="https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj" />
       </div>
-      <div class="button_info_container">
+      <div id="info_container">
         <button onclick="analyzeManifest()" class="form-button">Analyze</button>
-        <div class="manifest_type">
-          
-        </div>
       </div>
       <table id="resultsTable" class="results-table">
         <tr>
@@ -39,7 +36,9 @@
     </div>
     
     <script>
+        let called = false;
         function analyzeManifest() {
+          if(called) return;
           const streamLink = document.getElementById('streamLink');
           const streamLinkTrimmed = streamLink.value.trim();
 
@@ -53,6 +52,7 @@
           // Perform the logic to analyze the manifest
         //   const streamURL = 'https://hivejsartifacts.blob.core.windows.net/artifacts/plugins/102147/html5/dist/reference/html5/9.2.0/hivejs/silent-videojs.test.html?manifest=https://streaming-simulator-prod.hivestreaming.com/generic/live/beta-big-bunny-multi/manifest.m3u8?callback=https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj';
           sendData(joinURL);
+          called = true;
 
           function sendData(link) {
             console.log('Sending url link to Backend... ', link);
@@ -70,8 +70,12 @@
                 body: JSON.stringify({
                     streamInformation,
                 }),
-            }).
-            then(resp=>resp.json()).then(data=>buildTable(data))
+            })
+            .then(resp=>resp.json())
+            .then(data=>{
+              buildTable(data);
+              called = false;
+            })
             .catch(err=>console.warn('Error during fetch of results', err));
           }
 
