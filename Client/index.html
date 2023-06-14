@@ -16,7 +16,12 @@
         <label for="ticketLink" class="form-label">Callback(Ticket):</label>
         <input type="text" id="ticketLink" class="form-input" placeholder="Enter the callback link" value="https://api.hivestreaming.com/v1/events/9001/15/1894266/mWnCvsg73dQRIfoj" />
       </div>
-      <button onclick="analyzeManifest()" class="form-button">Analyze</button>
+      <div class="button_info_container">
+        <button onclick="analyzeManifest()" class="form-button">Analyze</button>
+        <div class="manifest_type">
+          
+        </div>
+      </div>
       <table id="resultsTable" class="results-table">
         <tr>
           <th>Recommended number of bitrates</th>
