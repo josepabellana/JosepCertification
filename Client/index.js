@@ -15,7 +15,7 @@ function checkManifestType(link){
       }
       const manifestDiv = document.createElement("div");
       manifestDiv.textContent = `Manifest Type: ${manifestType}`;
-      document.getElementsByClassName('button_info_container')body.appendChild(manifestDiv);
+      document.getElementsByClassName('button_info_container').appendChild(manifestDiv);
     })
     .catch(error => {
       console.error("Error fetching manifest:", error);
