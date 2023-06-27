@@ -23,4 +23,4 @@ To make it work:
 - Checks if allow query parameters
 - Checks if enables full hive tech
 
-By Josep Abellana Puyol 
+By @josepabellana
