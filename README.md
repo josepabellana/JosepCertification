@@ -22,6 +22,7 @@ To make it work:
 - Checks if supports multiple viewers
 - Checks if allow query parameters
 - Checks if enables full hive tech
-- Do approximation of cache occupancy recommendations
+- Do approximation of cache occupancy recommendation
+- Share with users a graph showing how cache occupation improves peering
 
 By @josepabellana
