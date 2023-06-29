@@ -24,5 +24,6 @@ To make it work:
 - Checks if enables full hive tech
 - Do approximation of cache occupancy recommendation
 - Share with users a graph showing how cache occupation improves peering
+- Slider showing how cache interacts with savings
 
 By @josepabellana
