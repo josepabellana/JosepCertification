@@ -1,6 +1,5 @@
 # JosepCertification
 
-
 To make it work:
 
 - npm install
