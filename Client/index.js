@@ -1,4 +1,4 @@
-var manifestDiv = document.createElement("div")
+var manifestDiv = document.createElement("div");
 
 function checkManifestType(link){
     fetch(link)
