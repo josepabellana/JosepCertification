@@ -1,7 +1,6 @@
 
 
 export const config = {
-
     "HLS": {
       "ticket": "https://api-test.hivestreaming.com/v1/events/9001/15/2060/cV1AMV4P9FOyf3cl",
       "manifest": "https://streaming-simulator-prod.hivestreaming.com/generic/live/beta-big-bunny-multi/manifest.m3u8"
