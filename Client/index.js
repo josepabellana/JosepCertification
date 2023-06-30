@@ -1,3 +1,4 @@
+var manifestDiv = document.createElement("div")
 
 function checkManifestType(link){
     fetch(link)
@@ -14,7 +15,6 @@ function checkManifestType(link){
         console.log("Unknown manifest type.");
       }
       if(manifestType) {
-          const manifestDiv = document.createElement("div");
           manifestDiv.textContent = `Manifest Type: ${manifestType}`;
           console.log(document.getElementsByTagName('button_info_container'))
           document.getElementById('info_container').appendChild(manifestDiv);

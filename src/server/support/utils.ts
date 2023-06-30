@@ -1,7 +1,3 @@
-
-
-
-
 export function extractResolutionsFromManifest(manifestContent: string): any {
   const regexResolution = /RESOLUTION=(\d+x\d+)/g;
   const matches = manifestContent.match(regexResolution);
