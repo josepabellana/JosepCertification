@@ -81,3 +81,10 @@ h1 {
 .red {
   background-color: #dc8477 !important;
 }
+
+#info-container { 
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
