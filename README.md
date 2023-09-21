@@ -24,5 +24,5 @@ To make it work:
 - Do approximation of cache occupancy recommendation
 - Share with users a graph showing how cache occupation improves peering
 - Slider showing how cache interacts with savings
-
+- Detection of versions and calculate PIT
 By @josepabellana
